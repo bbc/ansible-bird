@@ -15,7 +15,7 @@
 
 - name: Set fact for automatically enabling networks (IPv4)
   set_fact:
-    bird_ipv4_enabled: "{{ ansible_default_ipv4 is defined | bool }}"
+    bird_ipv4_enabled: "{{ facts['default_ipv4'] is defined | bool }}"
   when:
     - "bird_ipv4_enabled == 'detect'"
   tags:
@@ -25,9 +25,9 @@
 - name: Set fact for automatically enabling networks (IPv6)
   set_fact:
     bird_ipv6_enabled: >-
-      {{ (ansible_default_ipv6 is defined
-         and ansible_default_ipv6['scope'] is defined
-         and ansible_default_ipv6['scope'] == 'global') | bool }}
+      {{ (ansible_facts['default_ipv6'] is defined
+         and ansible_facts['default_ipv6']['scope'] is defined
+         and ansible_facts['default_ipv6']['scope'] == 'global') | bool }}
   when:
     - "bird_ipv6_enabled == 'detect'"
   tags:
